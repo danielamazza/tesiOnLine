@@ -1,0 +1,117 @@
+* {
+	margin:0; 
+	padding:0;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display:block; 
+	background: transparent;
+}
+
+body {
+	background-color:#fff; 
+	padding:48px 0; 
+	margin:0 auto;  
+	width:850px; 
+	font-family:"Droid Sans", "Helvetica Neue", Arial, Helvetica, sans-serif; 
+	position:relative;
+}
+
+h1 {
+	margin-bottom:1em; 
+	font-size:3em; 
+	font-family: "Droid Serif", Georgia, "Times New Roman", serif; 
+	font-weight:normal;
+}
+
+h4 {
+	
+	margin-bottom:1em; 
+	font-style: italic;
+}
+
+h5 {
+	font-size:1em;
+	margin-bottom:1em; 
+}
+
+p {
+	margin-bottom:1.5em; 
+	color:#000;
+}
+
+a {
+	color:#585; 
+	text-decoration: none;
+	border:0;
+}
+
+footer {
+	margin:0 0 1000px 0; 
+	padding-top:20px; 
+	border-top: 1px solid #f00;
+}
+small {
+	font-family: "Droid Serif", Georgia, "Times New Roman", serif; 
+	font-weight:normal; 
+	font-style:italic; 
+	color:#000;
+}
+
+hr{
+	margin-top:-20px;
+    margin-bottom:-20px;	
+	border: 0;   
+}
+
+blockquote{
+	margin-top:-20px;
+    margin-bottom:-20px;
+	margin-left:20px;
+	font-style: italic;
+}
+
+li {
+	list-style: disc outside none;
+	display: list-item;
+	margin-left: 2em;
+}
+
+a.publication{
+	color:#000;
+}
+
+ol {
+    counter-reset: item;
+    list-style-type: decimal;
+}
+
+ol li:before {
+    content: 'P' counter(item, decimal) '. ';
+    counter-increment: item;
+    font-weight: bold;
+
+}
+
+figure {
+  display: inline-block;  
+  
+}
+
+figure a {
+  display: block;
+  margin-left:20px;
+}
+
+figcaption {
+  text-align: center;
+  height:150px
+  line-height:50px;
+  font-style: italic;
+  font-size:1em;
+  margin-bottom:0.5em; 
+  width:100%;
+  
+}
+
+
