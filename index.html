@@ -491,11 +491,38 @@
 						<p>The proposed biased-randomization approach goes one step further, and instead of restricting the list of candidates, it assigns different probabilities of being selected to each potential movement in the sorted list. In this way, the elements at the top of the list receive more probabilities of being selected than those at the bottom of the list, but potentially all elements could be selected. Notice that by doing so, we are not only avoiding the issue of selecting the proper size of the restricted list, but we also guarantee that the probabilities of being selected are always proportional to the position of each element in the list. As a result, each time the randomized algorithm is executed, a new probabilistic solution is obtained (\autoref{fig:Scheme}). Some of these solutions will improve the original one provided by the base heuristic and, moreover, the proposed approach allows to offer alternative solutions to choose from, each of them with different properties.</p>
 						
 						<figure>
-							<a name="schemebra" class="fancybox" href="png/schemegra.PNG">
+							<a name="schemebra" class="fancybox" href="png/schemebra.PNG">
 								<img src="png/schemebra.PNG" alt="Scheme of the biased-randomization approach" />
 							</a>
 						<figcaption>Scheme of the biased-randomization approach.</figcaption>
 						</figure>
+						
+						<p>Focusing on our specific problem, the biased-randomization algorithm for the cell association consists of a skewed criteria based on the same cost function utilized for the greedy heuristic, i.e., the \gls{SMD}'s energy consumption for computing the application.
+						When a \gls{SMD} request occurs, the cost function $E_\textit{i,j}$ is evaluated for every possible \gls{RAT} node (considering also the fictitious node $0$ related to the local computation).</p>
+						
+						<p>The values are sorted in a way so that the probabilities of being selected depend not only on the cost function $E_\textit{i,j}$, but also on the distances $d_\textit{i,j}$ of the device from the \gls{RAT} nodes and on the number of devices $n_i$ that potentially can be connected to each \gls{RAT} node.</p> 
+						
+						<p>In fact, on the basis of the greedy algorithm, a \gls{SMD} far from all the \gls{RAT} nodes, but occurred before any other, is associated to a \gls{RAT} because the cost function value of the offloading is less than the cost function for the local computation. Instead, due to the high probability that another \gls{SMD} closer to this \gls{RAT} occurs, the local computation could be a better choice, giving place to the connection of the second closer \gls{SMD}. To improve the cell association, the criteria for sorting the list of choices takes into account the product $d_\textit{i,j} \cdot E_\textit{i,j}$, with $i \in \{{0\}} \cup \mathcal{M}$, instead of $E_\textit{i,j}$. The value of $d_\textit{0,j}$ is adjusted empirically and depends on the overall number of \glspl{SMD} which are expected to interact in the system. We selected a value $d_\textit{0,j}$ depending on the overall number of \glspl{SMD} which are supposed to interact in the system. The value of $d_\textit{0,j}$ has been evaluated observing  the optimal solution given by \ref{sub:model} in the post-analysis, i.e., when all the \gls{SMD} positions are already known.</p> 
+						
+						<p>This strategy is reported in Algorithm \autoref{algo:BRAalgo}.</p> 
+
+						<figure>
+							<a name="algo4" class="fancybox" href="png/algo4.PNG">
+								<img src="png/algo4.PNG" alt="Biased-randomization algorithm" />
+							</a>
+						<figcaption>Biased-randomization algorithm.</figcaption>
+						</figure>
+
+						<h4>5.4 Numerical Results</h4>
+						<p>We considered a deployment area similar to that of the previous chapters, i.e. an extension of $1000 m^2$, where one \gls{LTE} eNodeB with channel capacity equal to 100 MHz is positioned at point (500, 500) and three \gls{WiFi} access points with channel capacities equal to 22 MHz are positioned at point (0, 0), (500, 999) and (1000, 0). Each of them is supposed to cover the entire area and we considered an attenuation coefficient for the propagation $k$ equal to $10^{-3}$. Furthermore, similarly to \cite{Globecom2014}, the capacity constraints on the antennas is not considered, assuming there is no limitation on the number of customers.</p>
+						
+						<p>The \glspl{SMD} are placed in the deployment area according to a uniform distribution. In particular, we have chosen a controlled random number generation of type Mersenne Twister with seed equal to 1. The values of $f_{\textit{md}}$, $P_{\textit{id}}$, $P_{\textit{tr}}$, $P_l$, and $\textit{SNR}$ are specific parameters of the mobile devices. We considered the values of an HP iPAQ PDA with a 400 MHz Intel XScale processor ($f_{\textit{md}}=400$ MHz) and the following values: $P_l = 0.9 W$, $P_{\textit{id}} = 0.3 W$, $P_{\textit{tr}} = 1.3 W$, and $\textit{SNR} = 1000$. Regarding the cloud server, we suppose a computation speed $f_{cs} = 10^6$ MHz~\cite{Kumar}. We have chosen an application which is accomplished through a number of operation $O = 10^7$ and, if offloaded, needs a data transfer $D = 10^4$ bits.</p>
+						
+						<p>We have compared the cell association configurations resulting from the greedy heuristic, the biased-randomization algorithm, and the Baron solution. The no-connections configuration (all the \glspl{SMD} compute local) and the nearest-node configuration (each \gls{SMD}  connected to the closest \gls{RAT}) are also taken into account for comparison. The throughput, the energy consumed by the \glspl{SMD} and the time employed for accomplishing the application are evaluated and observed for each configuration, considering an increasing number of \glspl{SMD} involved in the system, in particular 500, 1000, 2000, and 5000. 
+						
+						<p>\autoref{tab:result_throughput}, \autoref{tab:result_energy}, and \autoref{tab:result_time} show, respectively, the results related to the throughput, the energy, and the time. The ex-post solution has been computed with Baron under the Neos server \footnote{\url{http://www.neos-server.org}}. The \gls{QSAP} model is implemented with the mathematical modeling language \gls{GAMS}. The other methods have been implemented in Matlab.</p>
+
+						
 						
 				</div>
 				
