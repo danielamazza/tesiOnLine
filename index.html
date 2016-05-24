@@ -267,23 +267,212 @@
 						<p>In \autoref{fig:offloading-distribution}, the  \gls{UMCC} framework is sketched by representing the functional flows of the architecture. Whenever a smart city application should be performed, the citizen within the \gls{UMCC} can select among different \gls{MCC} infrastructures, i.e., centralized clouds, cloudlets, and distributed mobile clouds, aiming to respect the requirements of the specific application depending on their features. 
 						The distribution depends on the application requirements, and the  \gls{UMCC} features; its optimization will be discussed in the Section \ref{sec:cost}.</p>
 
+						<h5>Computation, storage, and tranmission features</h5>
+						<p>The features of the selected processing and storage devices, considered \textit{per se} or in a group forming cloud/cloudlets, are: </p>
+						<ul>
+						    <li><b><i>Processing Speed: </i></b> The processing speed corresponds to the performance speed of a device or a group of devices for processing the applications;</li>
+							<li><b><i>Storage Capacity: </i></b> The storage capacity corresponds to the amount of storage space provided by a device or a group of devices.</li>
+						</ul>
+						<p>
+						<p>In the same time, the features of the transmission equipments to be taken into account are: </p>
+						<ul>
+						    <li><b><i>Channel Capacity: </i></b> The nominal bandwidth of a certain communication technology that can be accessed by a certain device;</li>
+							<li><b><i>Priority/QoS management: </i></b> The ability of a certain communication technology to manage different \gls{QoS} and/or priority levels;</li>
+							<li><b><i>Communication interfaces: </i></b> The number of communication interfaces of each device, that impacts on the possibility of selection among the available heterogeneous networks.</li>
+						</ul>
 
 
+						<h4>1.5 The UMCC model</h4>
+						<p>In this paragraph we focus on the different entities playing a role in the \gls{UMCC} framework, describing the functions and the interactions among them. First of all, we are focusing on an application ${App}$ requested by a \gls{RSMD}, defined through the number of operation to be executed, $O$, the amount of data to be exchanged, $D$, and the amount of data to be stored, $S$. An application can be seen as a smart city service, that can be executed either locally or remotely by exploiting the cloud infrastructures. Furthermore, each application has many requirements regarding the levels of \gls{QoS}. We have taken into account the following:</p>
+						
+						<ul>
+						    <li>the maximum accepted latency $T_\textit{app}$, intended as the interval between the request of performing an application and the acquisition of its results by the \gls{RSMD},</li>
+							<li>the minimum level of energy consumption $E_\textit{app}$, that the \gls{RSMD} necessarily uses for performing the application itself,</li>
+							<li>the throughput $\eta_\textit{app}$, intended as the minimum bandwidth that the application needs for being performed.</li>
+						</ul>
+						
+						<p>Hence, for highlighting the $\textit{App}$ dependence from the above measures, we can write: </p>
+						
+						\begin{equation} 
+							App = App(O,D,S,T_\textit{app},E_\textit{app},\eta_\textit{app})
+						\end{equation}
 
-
-
-
-
-                  <!-- -------------------------
-                    	When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
-						$$App = App(O,D,S,T_\textit{app},E_\textit{app},\eta_\textit{app})$$ 
-
-						In equation \eqref{eq:sample}, we find the value of an interesting integral:
+						<p>A foundamental entity acting in the system is the \gls{RSMD} requesting the $\textit{App}$, we named $\textit{Dev}$, characterized by certain features that are involved in the offloading operation: the power to compute applications locally, $P_l$, the power used for transferring data towards clouds, $P_{\textit{tr}}$, the power for idling during the computation in the cloud, $P_{\textit{id}}$, the computing speed to perform locally the computation, $f_{\textit{l}}$, and the storage availability, $H_{\textit{l}}$. Furthermore, also the time-varying position of the device plays an important role in the system interactions. Hence, we can write:</p>
+						
+						\begin{equation}  
+							Dev = Dev(P_l, P_{\textit{tr}}, P_{\textit{id}}, f_{\textit{l}}, H_{l}, pos_{\textit{dev}}(x, y))
+							\label{eq:Dev}
+						\end{equation} 
+						
+						<p>Focusing on the different types of cloud entities in our scenario, we considered a unique centralized cloud $C_{\textit{cc}}$ and various cloudlets $C_{\textit{cl}}$ characterized by their own computing speed to perform the computation, i.e., $f_\textit{cc}$  for the centralized cloud and  $f_\textit{cl}$  for the cloudlets. Additionally, the storage availability  $H_\textit{cl}$ of each cloudlet has to be taken in consideration, while the storage availability of the centralized cloud can be considered infinite, therefore not constraining in the interaction. Hence, we can write for the centralized cloud $C_{\textit{cc}}$:</p>
+						
+						\begin{equation}
+						\label{eq:Ccc}
+						C_{\textit{cc}} = C_{\textit{cc}}(f_{\textit{cc}})
+						\end{equation}
+						
+						<p>and for each cloudlet, considering also the influence of the position $pos_\textit{cl}(x, y)$ of the in-built \gls{AP}, the end-to-end throughput $\eta_{\textit{cl}}$ provided by the \gls{AP} itself, the maximum number of devices that it is possible to connect at the same time $n_\textit{cl}$, and the range of action $ r_{\textit{cl}}$: </p>
+						
+						\begin{equation}
+						\label{eq:Ccl}
+						C_{\textit{cl}} = C_{\textit{cl}}(f_{\textit{cl}}, H_{\textit{cl}},  pos_{\textit{cl}}(x, y), \eta_{\textit{cl}}, n_\textit{cl}, r_{\textit{cl}})
+						\end{equation} 
+						
+						We are considering the system from the point of view of a single \gls{RSMD} requesting to run an application, while the set of the other \glspl{SMD} constituting the distributed cloud are providing a service for supporting the  \gls{RSMD}. Thus, the distributed cloud is a set of generic entities $\textit{MD}s$, each characterized by its specific connectivity, computation and storage for the exchange of data, i.e. the computing speed $f_{\textit{MD}}$, the storage availability $H_{\textit{MD}}$, the position $pos_{\textit{MD}}(x, y)$, the throughput $\eta_{\textit{MD}}$, the number of devices that can be connected to each device$n_{\textit{MD}}$,  and each range of action $r_{\textit{MD}}$. Thus, we can write for the generic device $\textit{MD}$:</p>
+						
+						\begin{equation}  
+							\label{eq:SMD}
+							\textit{MD} = \textit{MD}( f_{\textit{MD}}, H_{\textit{MD}}, pos_{\textit{MD}}(x, y), \eta_{\textit{MD}} ,  n_{\textit{MD}},  r_{\textit{MD}} )
+						\end{equation}
+						
+						<p>While the connection to the cloudlets can be made only through the unique \gls{AP} that can be considered built-in in each cloudlet itself, and the connection of the distributed cloud to the \gls{RSMD} can be made directly, the nodes of the \gls{HetNet} offer different choices to connect towards the centralized cloud. Thus, for each involved node $\textit{Nod}$ constituting the centralized cloud, specifying that $pos_\textit{Nod}(x,y)$ is the position of the node, $\eta_\textit{Nod}$ is the end-to-end throughput in bit per second  between the user and the exploited node, $n_\textit{Nod}$ is the number of devices available to connect, and $r_\textit{Nod}$ is the range of availability of the node, we can write:</p>
+						
+						\begin{equation}
+						   \label{eq:Nod}
+						   \textit{Nod} = \textit{Nod}(pos_{\textit{Nod}}(x, y), \eta_{\text{Nod}} ,  n_{\text{Nod}},  r_{\text{Nod}})
+						\end{equation}
+						
+						<p>The \autoref{tab:entities} summarizes the entities and the characteristics above described. </p>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/entitiesTable.PNG">
+								<img src="png/entitiesTable.PNG" alt="Summary of entities and relations in the UMCC - Involved features and requirements" />
+							</a>
+						<figcaption>Summary of entities and relations in the UMCC - Involved features and requirements</figcaption>
+						</figure>
+						
+						<p>They are in a certain relationship due to some physical and logical constraints derived from the following considerations. </p>
+						<p>First, for distributing the computation of the application among the different types of clouds, the system has to evaluate which \gls{HetNet} nodes, cloudlets, and \glspl{SMD} are available. The availability is realized if the \gls{RSMD} is in the range of action of a particular \gls{HetNet} node, cloudlet or \gls{SMD} and if these entities are not busy, i.e., if the number of devices connected to an entity $n_\text{conn}$ is less than $n_\textit{Nod}$, $n_\textit{cl}$, or $n_\textit{MD}$, dependently from the type of entity.</p>
+						
+						<p>Thus, there are $M$ available \gls{HetNet} nodes $\textit{Nod}$ for offloading towards the centralized cloud,  $N$ cloudlets $C_{\textit{cl}}$ and $K$ devices $\textit{MD}$, able to share the computation in the distributed cloud. After the detection of the available entities (which are a total of $1+M+N+K$, including the local node \gls{RSMD}, which we consider for simplicity the node of index 0), the next step is to distribute, by means of all these entities, different percentages $\alpha_i$  of operations $O$, $\beta_i$ of data $D$, and $\gamma_i$ of memory $S$, to all the available nodes, cloudlets and devices, under the constraints:</p>
+						
+						\begin{equation}
+						\label{eq:alpha}
+						\sum_{i=0}^\textit{M+N+K} \alpha_i = 1
+						\end{equation}
+						
+						<p>and</p>
+						
+						\begin{equation}
+						\label{eq:beta}
+						\sum_{i=1}^\textit{M+N+K} \beta_i = 1
+						\end{equation}
+						
+						<p>Alongside the computing capacity, it is possible to define a constraint regarding the storage availability of the cloudlets and the \glspl{SMD} by means of the following equations, considering infinite the storage availability of the centralized cloud:</p>
+						
+						\begin{equation}
+						\label{eq:storage}
+						\gamma_i S \le H_i \quad \quad \forall i \in \{0,1,...,i,..., \textit{N+K}\}
+						\end{equation}
+						
+						<p>that stands for an upper limit of remotely used storage of a certain $i$-th cloud infrastructure.</p>
+						
+						<p>A constraint related to the application's requirements $\eta_\textit{app}$ involves the throughput of the entities designated for the offloading: the overall throughput offered by the selected devices should be higher than the minimum throughput requirement of a certain application:</p>
 
 						\begin{equation}
-						  \int_0^\infty \frac{x^3}{e^x-1}\,dx = \frac{\pi^4}{15}
-						  \label{eq:sample}
-						 \end{equation} -->
+						\label{eq:throughput}
+						\sum_{i=1}^\textit{M+N+K} \eta_i \ge \eta_\textit{app}
+						\end{equation}
+						
+						<p>From the point of view of the \gls{RSMD}, the energy spent for offloading the application can be written as the sum of the energy spent to perform locally a part of the task, plus the energy spent by the \gls{RSMD} for the transmission of data to the clouds, plus the energy spent during the idle period when the computation is being offloaded. Hence, the restriction related to the requirement $E_\textit{app}$ leads to the following:</p>
+						
+						\begin{equation}
+						\label{eq:energy}
+						P_l \frac{\alpha_0 O}{f_l}  + \sum_{i=1}^\textit{M+N+K}{P_\textit{tr}\frac{ \beta_i D}{\eta_i} + P_\textit{id}  \operatorname*{arg\,max}_{i =1,\textit{M+N+K}}\left \{ \frac{\alpha_i O }{f_i} \right \}}\le{E_\textit{app}}
+						\end{equation}
+						
+						<p>In the same time, the total latency is the sum of the time for computing locally the $\alpha_0$ percentage of computation, plus the times to transmit/receive data to/from the other computation units, plus the maximum of the time to compute in offloading. Hence, the restriction related to the requirement $T_\textit{app}$ leads to the following:</p>
+						\begin{equation}
+						\label{eq:latency}						T=t_l^{\text{comp}}+t_{cc}^{\text{tr}}+t_{cc}^{\text{comp}}+t_{cl_j}^{\text{tr}}+t_{cl}^{\text{comp}}+t_{dc_j}^{\text{tr}}+t_{dc}^{\text{comp}}\\
+						\alpha_0 \frac{O}{f_l}+ \sum_{i=1}^\textit{M+N+K} \frac{ \beta_i D}{\eta_i} +  \operatorname*{arg\,max}_{i =1,\textit{M+N+K}}\left \{ \frac{\alpha_i O }{f_i} \right \}\le{T_\textit{app}}
+						\end{equation}
+						
+						<p>Furthermore, the throughput $\eta_i$ is related to the number of devices $n_i$ connected to the $i^{th}$ entity and the channel capacity $BW_i$ as shown by the following representing the Shannon Formula:</p>
+						
+						\begin{equation}
+						\eta_i = \frac{\textit{BW}_i}{n_i}\cdot \log_2{\left(1+\frac{\textit{SNR}_i}{d_i^2}\right)}
+						\label{eq:shannon1}
+						\end{equation} 
+						
+						<p>where $\textit{SNR}_i$ is the \gls{SNR} of the related link and $d_i$ the distance between the receiver and the transmitter. Thus, the optimization of the system consists in finding the values of $\alpha_i$, $\beta_i$ and $\gamma_i$ that satisfy eqs.~\eqref{eq:alpha}-(\ref{eq:shannon1}). This is a nontrivial optimization problem, but the complexity can be decreased with the introduction of some simplifications, as presented in the following chapters.</p>
+						
+						<h4>1.6 Requirements of smart city applications</h4>
+						<p>There are many taxonomies trying to define smart city key areas, where social aims, care for environment, and economic issues are related and interconnected. The \gls{IERC} has identified in~\cite{IERC} a list of applications in different domains of \gls{IoT}, including the smart city domain, showing the utmost strategic technology trends for the next five years. Moreover, the Net!Works European Technology Platform for Communications Networks and Services has issued a white paper~\cite{whitepaperNetWorks} aiming to identify the major topics of smart cities that will influence the \gls{ICT} environment. Furthermore, a relevant document aiming to categorize and define the different applications has been released by \gls{ETSI}, where several application types have been specified focusing on their bandwidth requirements~\cite{etsi}. </p>
+						
+						<p>Taking into account all the relevant observations presented in these essays, we analyzed some particular smart city applications covering the areas of mobility, healthcare, disaster recovery, energy, waste management and tourism, in order to leverage the \gls{UMCC} identifying the requirements which are related to the \gls{QoS}. </p>
+						
+						<p>Each application is defined through the service provided to the citizens, concerning the requirements in terms of throughput, energy consumption, time due to the transferring and computation processes, and number of users. In addition, for every application, the typical requirements of processing, data to exchange and storage have been established. The following list summarizes the definition of these requirements: </p>
+						
+						<li>
+							<ul><b><i>Latency: </i></b> The latency is defined as the amount of time required by a certain application between the event happens and the event is acquired by the system;</ul>
+							<ul><b><i>Energy Consumption: </i></b> The energy consumption corresponds to the energy consumed for executing a certain application locally or remotely;</ul>
+							<ul><b><i>Throughput: </i></b> The throughput corresponds to the amount of bandwidth required by a specific application to be reliably installed in the smart city environment;</ul>
+							<ul><b><i>Computing: </i></b> The computing corresponds to the amount of computing process requested by a certain application;</ul>
+							<ul><b><i>Exchanged data: </i></b> The exchanged data correspond to the amount of input, output and code information to be transferred by means of the wireless network;</ul> 
+							<ul><b><i>Storage: </i></b> The storage corresponds to the amount of storage space required for storing the sensed data and/or the processing application;</li>
+							<ul><b><i>Users:  </i></b> The users correspond to the number of users for achieving a reliable service.</ul>
+						</li>
+						<p>
+						<p>The \gls{QoS} is a function of the previous requirements, where each one of these plays a role less or more important depending on the aims of the application. In the following list the considered application types are described by highlighting their technological requirements and characteristics, while in \autoref{tab:applications1} the considered application types and the significance of their requirements are summarized. </p>
+						
+						<figure>
+							<a name="scenario1" class="fancybox" href="png/SmartCityApplicationRequirements.PNG">
+								<img src="png/SmartCityApplicationRequirements.PNG" alt="Summary of smart city applications and Requirements" />
+							</a>
+						<figcaption>Summary of smart city applications and Requirements</figcaption>
+						</figure>
+						
+						<h5>Mobility</h5>
+						<p>All the components in an intelligent transportation system could be connected to improve transportation safety, relieve traffic congestion, reduce air pollution and enhance comfort of driving. The three-layered hierarchical cloud architecture for vehicular networks proposed by Yu et al.~\cite{Vehicular}, where vehicles are mobile nodes that exploit cloud resources and services, can be considered as included in the \gls{UMCC} framework. A real-time navigation with computation resource sharing, where the computation resources in the central cloud are utilized for data traffic mining, requests a minimal latency, since a ready response is needed. On the other hand, considering that the great part of mobile devices can be recharged directly from the car, energy consumption has to be considered only for pedestrians and bicycles. The necessary throughput, the computational load and the amount of data to exchange are high, whereas we can think the storage as a secondary requirement, unless for security recording.</p>
+						
+						<h5>Healthcare</h5>
+						<p>Intelligent and connected medical devices, monitoring physical activity and providing efficient therapy management by using patients' personal devices, could be connected to medical archives and provide information for medical diagnosis. We considered in the \gls{UMCC} framework the typical architecture proposed by He et al.~\cite{HEALTH}, requiring a full integration of the clinical devices and efficient processing of the collected data, considering, for instance, a cloudlet nearby the home of the patient. In this case there are relatively low requirements regarding energy consumption, throughput and number of users, whereas the requirements of latency, computation, exchanged data and storage are high, considering the complexity of the management algorithm, the video monitoring for remote diagnosis and the data to store for the personal record archive.</p>
+						
+						<h5>Disaster Recovery</h5>
+						<p>In \cite{Satyanarayanan} a disaster relief scenario is described, where people are facing with the destruction of the infrastructures and local citizens are asked to use their mobile phones to photograph the site. 
+						Also this case introduces the three-layered cloud described in the \gls{UMCC} framework, requiring to transmit a lot of data using the cameras provided by the smartphones to reconstruct the disaster scene. In this case there are relatively low requirements regarding throughput, whereas it is important to have a quick response and to save the energy of the devices. There are a lot of computation to reconstruct the scene and a lot of data to exchange and to store. The number of users is variable.
+						
+						<h5>Energy</h5>
+						<p>Energy saving can take advantage from the cloud basically thanks to smart grid systems, aimed to transform the behavior of individuals and communities towards a more efficient and greener use of electric power. Data fusion and mining, as well as scheduling and optimization, are critical in order to include the use of wireless communications to collect and exchange information about electric quality, consumption, and pricing in a secure and reliable fashion. By analyzing the specific aspects regarding the \gls{UMCC}, if we consider an application where vehicles are involved in a smart grid system, we can suppose that a big data exchange is needed, there is a lot of computation and storage between a large number of users, whereas there are relatively low requirements regarding latency and throughput, and energy saving is not a problem for the devices involved.
+						
+						<h5>Waste Management</h5>
+						<p>Automatically generated schedules and optimized routes which take into account an extensive set of parameters (future fill-level projections, truck availability, traffic information, road restrictions, etc.) could be planned not only looking at the current situation, but also considering the future outlook. A logistic solution that uses wireless sensors to measure and forecast the fill-level of waste and recycling containers could combine fill-level forecasts with an extensive set of collection parameters (e.g., traffic information, vehicle information, road restrictions) in order to calculate the most cost efficient collection plan. This smart plan would be automatically generated and accessed by the driver through a tablet\footnote{Example from \url{http://www.enevo.com/}}. We can expect non-restrictive requirements of latency and throughput, whereas  resource-poor equipments have to be taken into consideration. The requirements related to data to be exchanged, load of computation, storage and number of users are not critical.</p>
+						
+						<h5>Tourism</h5>
+						<p>Augmented reality and social networks are the characteristics of applications that more take advantage from the cloud, that becomes also useful for mobile users sharing photos and video clips, tagging their friends in popular social networks like Twitter and Facebook. The cloud is effective also when mobile users require searching services, also using recognition techniques (using voice, images and keywords)\footnote{Example from \url{http://www.mtrip.com/augmented-reality/}}. We can expect not-restrictive requirements of latency and throughput, whereas  resource-poor equipments have to be taken into consideration. There are a great amount of data to be exchanged, load of computation and storage and number of users are variable.
+						
+						<h4>1.7 A utility based resource optimization approach</h4>
+						<p>The requirements related to the applications, and the associated \gls{QoS}, can be respected by optimizing the application partitioning and node/cloud association based on the features of the processing and storage devices and of the transmission equipments introduced in \autoref{sec:challenges}. Moreover, it should be noted that there is a correlation among the application requirements and the features of the \gls{UMCC} equipments. </p>
+						<p>The latency suffered to perform a certain application can be seen as composed by the time needed for transferring the application data to the cloud computing infrastructure and the time needed for the cloud computation, therefore it is affected by the processing speed of the involved devices and by the channel capacity and the communication interfaces of the chosen transmission equipments. Furthermore, the energy spent to perform an application depends on the time needed for the data transfer, thus it depends on the channel capacity and the number of communication interfaces of the communication equipments; it has to be noticed that we have to consider also the energy spent by the user device while idles during the cloud computation, so that the processing speeds of the cloud devices are involved. The storage value of the application does not influence directly the performance of the system, but it can represent a limitation for the usability of a certain cloud infrastructure, as well as the number of potential users of the application.</p>
+						<p>A feasible optimization regarding the computing and the exchanged data requirements can be performed by operating on the complexity of the computability resources, considering also that, in partial offloading, the exchanged data could not be a predetermined value~\cite{Challenges}. </p>
+						<p>In this context, a utility function aiming to optimize the application-dependent \gls{QoS} is proposed, acting as input for a procedure of partition and a node/cloud association, as shown in \autoref{fig:FunctionalBlocks}. The utility function can be written as:</p>
+						
+						\begin{equation}
+						U =  \sum_{i=1}^{N_{req}}\gamma_i f_i(\xi_i)
+						\label{eq:global-utility}
+						\end{equation}
+						
+						<p>where $N_{req}$ is the number of requirements for a certain smart city application, $\xi_i$ stands for the $i$-th application requirement among those defined in \autoref{sec:requirements}, and $\gamma_i$ is a weight value, while $f_i(\cdot)$ corresponds to a specific utility function used for evaluate the respect of the $i$-th requirement. </p>
+						
+						<p>In \autoref{fig:FunctionalBlocks}, the functional blocks of the \gls{UMCC} framework, based on a utility function optimization, are represented. On one hand, the smart city applications define specific requirements, while the cloud topologies in a certain scenario set their features. The utility function aims at selecting those cloud topologies that allow to respect the requirements by setting an optimized distribution of the application itself. The optimization of the partition and the node association will impact again on the \gls{UMCC} features to be used by the other applications.</p>
+						
+						<figure>
+							<a name="blockscheme" class="fancybox" href="png/blockscheme.PNG">
+								<img src="png/blockscheme.PNG" alt="The utility function acts for distributing and performing the application in different parts of the Urban MCC." />
+							</a>
+						<figcaption>The utility function acts for distributing and performing the application in different parts of the Urban MCC.</figcaption>
+						</figure>
+						
+						<p>The maximization of the introduced utility function could be a nontrivial optimization problem, depending on the considered number of applications and devices acting in the selected scenario. In relation to the introduced requirements, the number of constraints could be reduced, and the complexity of the problem decreased by introducing opportunely defined sub-optimal solutions. All the utility and cost functions presented in the following chapters are particular cases of the \autoref{eq:global-utility}. In particular, in \autoref{chap:EUCNC}  a cost function including the tradeoff between energy consumption of mobile devices versus the time to offloading data and to compute tasks on a centralized remote cloud server is provided, evaluating the optimal offloading fraction depending on the network’s load; in \autoref{chap:GLOBECOM14} and in \autoref{chap:socialBRA} we focused on a utility function representing the \gls{QoS} degree perceived by the user, modeled as a sigmoid curve, that is a well-known function often used to describe \gls{QoS} perception~\cite{Badia}; finally, in \autoref{chap:cluster-based} we focused on the computation offloading towards the distributed cloud, for offloading a real-time navigation application in a distributed fashion, aiming to minimize the execution time, since the devices are autonomous regarding the energy provision. 
+						
+						<h4>1.8 Conclusions</h4>
+						<p>In this chapter we introduced the \gls{UMCC} framework, a concept that supports the smart city vision for the optimization of the \gls{QoS} of various types of smart city applications. The \gls{UMCC} consists of different topologies of cloud and diverse types of \glspl{RAT}, that are used for offloading computation and share resources among the mobile devices. The \gls{QoS} depends on the type of application, since it is affected by the defined requirements in a different way depending on the aims of the application itself. A cost function optimization approach is proposed, aiming to select the optimal partition level of the applications and the cloud infrastructures to be used for their computation. The optimization of the \gls{QoS} is influenced by a big number of features, related to the choice of the distribution of data in the cloud units and the nodes used for the transmission, but the problem can be restricted considering some simplifications suggested by the aims and the domain of the application. </p>
+
+
+						
+
+
+ <!-- INIZIO III PARTE -->                 
 						 
 					<h2><a name="part3"> Part III - Optimization Considering a Considering a Community of Devices</a></h2>
 						<p>In a typical smart city ecosystem, where a great affluence of mobile devices try to perform applications at the same time, a competition for allocating remote resources occurs, becoming a potential cause of delay and energy consumption. In such a large-scale and dynamic system, relevant optimization challenges concerning the operational assignment of computation offloading become a community issue. Most of these challenges are related to the minimization of the necessary time and energy employed for satisfying the mobile users' requests.</p>
@@ -521,8 +710,140 @@
 						<p>We have compared the cell association configurations resulting from the greedy heuristic, the biased-randomization algorithm, and the Baron solution. The no-connections configuration (all the \glspl{SMD} compute local) and the nearest-node configuration (each \gls{SMD}  connected to the closest \gls{RAT}) are also taken into account for comparison. The throughput, the energy consumed by the \glspl{SMD} and the time employed for accomplishing the application are evaluated and observed for each configuration, considering an increasing number of \glspl{SMD} involved in the system, in particular 500, 1000, 2000, and 5000. 
 						
 						<p>\autoref{tab:result_throughput}, \autoref{tab:result_energy}, and \autoref{tab:result_time} show, respectively, the results related to the throughput, the energy, and the time. The ex-post solution has been computed with Baron under the Neos server \footnote{\url{http://www.neos-server.org}}. The \gls{QSAP} model is implemented with the mathematical modeling language \gls{GAMS}. The other methods have been implemented in Matlab.</p>
-
 						
+						<figure>
+							<a name="table5-1" class="fancybox" href="png/table5-1.PNG">
+								<img src="png/table5-1.PNG" alt="Throughput" />
+							</a>
+						<figcaption>Throughput.</figcaption>
+						</figure>
+						
+						<figure>
+							<a name="table5-2" class="fancybox" href="png/table5-2.PNG">
+								<img src="png/table5-2.PNG" alt="Energy" />
+							</a>
+						<figcaption>Energy.</figcaption>
+						</figure>
+						
+						<figure>
+							<a name="table5-3" class="fancybox" href="png/table5-3.PNG">
+								<img src="png/table5-3.PNG" alt="Time" />
+							</a>
+						<figcaption>Time.</figcaption>
+						</figure>
+						
+						<h4>5.5 Analisys of Results</h4>
+						<p>The results of \autoref{tab:result_throughput},  \autoref{tab:result_energy}, and \autoref{tab:result_time} show that the biased-randomized algorithm clearly improves the cell association configuration with respect to the greedy heuristic. These improvements are: 2.24\% in throughput, 14.30\% in energy consumption, and 0.42\% in computation time. </p>
+						<p>Also, the average energy and time values provided by the randomized algorithm, which only requires some milliseconds to compute, are quite similar to the solutions provided by Baron, which is stopped after 1,000 seconds of computation. The results are visually compared in \autoref{fig:throughputComparison} and in~\autoref{fig:throughput-5}, where we can see that the trends of average throughput are very similar, practically overlapped, in the three cases of interest, i.e. the greedy heuristic, the biased randomized algorithm, and the Baron ex-post configuration. This means that the capacity of the \gls{RAT} nodes is well-exploited in all the three cases considered. In \autoref{fig:throughputComparison} the average throughput values are visualized in a different scale to make possible the comparison of the three algorithms.</p>
+
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption></figcaption>
+						</figure>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption></figcaption>
+						</figure>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption></figcaption>
+						</figure>
+						
+						<p>Considering the average energy consumed by a \gls{SMD} to perform the application, which is the objective function to minimize, Figure \autoref{fig:energy-5} shows that the biased-randomized algorithm clearly outperforms the greedy heuristic. The same observation can be inferred from Figure\autoref{fig:time-5} in relation to the average time that a device needs to accomplish the application. Both the average energy and the time values are very close to the respective Baron configuration average energy and time values, thus the biased randomized algorithm can be exploited by the \glspl{SMD} to reach a near-optimal configuration in real time while the solution seen from a collective point of view minimizes the overall energy consumption. This is useful for  offloading applications which need a fast cell association decision, for example when the users are in movement and the configuration must be updated very often. 
+						</p>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption></figcaption>
+						</figure>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption></figcaption>
+						</figure>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption></figcaption>
+						</figure>
+						
+						<p>Comparing the different configurations of the devices placed in the observed area, reported in \autoref{fig:scatter500}, \autoref{fig:scatter1000}, \autoref{fig:scatter2000} and \autoref{fig:scatter5000} for a total number of SMD equal to 500, 1000, 2000 and 5000 respectively, we can note that the case referring to the biased-randomized algorithm is very similar to the ex-post optimal solution, where the \glspl{SMD} connected to the same \gls{RAT} are clustered in the neighborhood of the \gls{RAT}.  </p>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption></figcaption>
+						</figure>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption></figcaption>
+						</figure>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption></figcaption>
+						</figure>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption></figcaption>
+						</figure>
+						
+						<h4>5.6 Conclusion</h4>
+						<p>In this chapter we presented different strategies for efficient cell association in pervasive wireless environments. In particular, we proposed an original probabilistic algorithm that allows to consider a more global point of view --instead of just an individual one-- during the real-time resource allocation. Thus, the mobile communication system is managed in a cooperative way, considering the \gls{QoS} of the entire population of mobile users. This vision could be adopted for the provision of services in a smart city, improving performance and well-being of the community through a social use of the \gls{UMCC} framework. Our approach is based on the use of biased-randomization techniques, which have been used in the past to solve similar combinatorial optimization problems in the fields of logistics, transportation, and production. This work extends their use to the field of smart cities and mobile telecommunications. Some numerical experiments contribute to illustrate the potential of the proposed approach.
+						</p>
+						
+						<h3><a name="chap6">6. Conclusion and future works</a></h3>
+						<h4>6.1 Final Conclusions</h4>
+						<p>The actual realization of the vision of smart cities is an exciting perspective with the potential of bringing tremendous improvements to our society, thanks to novel pervasive services assisting us in every aspect of our lives.</p>
+						<p>While the increasingly deep integration of \gls{ICT} services in the physical world has been the main enabling factor motivating this vision, we believe that the intelligent and efficient exploitation of the infrastructures will be the key to its success.</p>
+						<p>Our contribution has proposed an original solution approach for dealing with common resources that need an optimization for the distribution among users.</p>
+						<p>We hope that our work was successful in proposing general and simple solution principles that can be used fruitfully as starting points for new research efforts toward the realization of future large scale smart pervasive environments. Finally, let us note that, while the scope of our research was focused on the specific application scenario of smart city environments, we believe that most of the presented results can be easily and successfully used in other scenarios with similar requirements of efficient and scalable distribution, such as the management of large scale telecommunication infrastructures or smart grids deployments. </p>
+						
+						<h4>6.2 Directions for Future Works</h4>
+						<p>Cities around the globe are beginning to build out new digital services such as smart lighting, traffic, waste management and data analytics to reduce costs, tap new sources of revenue, create new innovation business districts and improve the overall quality of urban life. Integrated \gls{IoT} and \gls{MCC} applications enabling the creation of smart environments such as smart cities need to be able to combine services offered by multiple stakeholders and scale to support a large number of users in a reliable and decentralized manner. They deal with constraints such as access devices or data sources with limited power and unreliable connectivity. The \gls{UMCC} needs to be enhanced to support a seamless execution of applications harnessing capabilities of multiple dynamic and heterogeneous resources to meet quality of service requirements of diverse users.</p>
+						<p>The management of distributes mobile platform resources need further investigation. This thesis is a starting point for a user-centric model that requires additional heterogeneity: i.e. customized needs and different \gls{QoS} levels. For example, some users could not have problem of battery charge whereas others could need to save energy (i.e. \gls{SMD} having a low-battery-level status). Thus, the clusterization debated in \autoref{chap:cluster-based} needs to be deeply investigated.  </p>
+						<p>A further point of invetigation is the study of \glspl{SMD} in motion, for analyzing the time evolution of the system: in \autoref{chap:socialBRA} the approach \emph{on the fly} assigns a \gls{RAT} node to a \gls{SMD} every time a request occurs, but, since it depends on the position of the devices, the \gls{CA} needs a time optimization subordinate to the speed of the devices.</p>
+						<p>In addition, considering an operational research perspective, the \gls{CA} assignation in the \gls{UMCC} can be seen as a stochastic allocation of resources, in particular an assignation of the \glspl{SMD} to the available \glspl{RAT}, as shown in \autoref{RandomAllocation}. <p>
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption>Allocation of mobile devices with random positions to RATs</figcaption>
+						</figure>
+						
+						<p>In fact, being mobile, the position of the devices change over time, and it is possible to assume that the position of each device in a future target time can be characterized by two random variables, describing the x and y location, respectively as shown in \autoref{randomXY}. </p>
+						
+						<figure>
+							<a name="" class="fancybox" href="png/">
+								<img src="png/" alt="" />
+							</a>
+						<figcaption>Random position of the devices in a target time</figcaption>
+						</figure>
+						
+						<p>It will also be assumed that the expected value of each random variable will be given by the current position of the respective device. Assuming that the expected value of each random variable will be given by the current position of the respective device, it is possible to model this scenario as a \gls{FLP} with stochastic assignment costs - i.e. a combination of different factors, such as time-based costs and energy-based costs, random variables proportional to the Euclidean distance between the device and the \gls{RAT} node. It is worth to note that the \glspl{RAT}’ capacity could be considered either as virtually unlimited or not, thus leading to two different problems: the Uncapacitated \gls{FLP} and the Capacitated \gls{FLP}, respectively. One way to deal with these stochastic  \glspl{FLP} would be to use a simheuristic approach \cite{Juan2015} i.e., a combination between a fast metaheuristic - able to quickly generate several good or promising solutions for the deterministic version of the \gls{FLP} - and a fast simulation process able to estimate the expected cost associated to a given deterministic solution when it is used for the stochastic scenario. The main goal of this future work will be to minimize the expected costs of the assignment process. The simulation, however, could also provide insights on the ‘robustness’ of each promising solution, enriching a risk analysis investigation.</p>
 						
 				</div>
 				
